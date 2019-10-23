@@ -66,7 +66,7 @@ class PasswordReset extends Component {
     const { email, emailLabelText, shouldShowSubmitButton, shouldShowEmailInput } = this.state;
     return (
       <Container fluid>
-        <h2 className="text-center mt-4">Reset your password</h2>
+        <h3 className="text-center mt-4">Reset your password</h3>
         <Row className="pt-1">
           <Col
             xs={{ size: 10, offset: 1 }}
