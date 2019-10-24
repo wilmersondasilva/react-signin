@@ -93,6 +93,8 @@ class Login extends Component {
                                         type="email"
                                         id="email"
                                         name="email"
+                                        autoFocus
+                                        tabIndex={0}
                                         value={email}
                                         onChange={this.handleChange}
                                     />
@@ -105,8 +107,10 @@ class Login extends Component {
                                             </Label>
                                         </Col>
                                         <Col className="text-right">
-                                            <Link to="/password-recovery">
+                                            <Link to="/password-recovery" tabIndex={-1}>
                                                 <Button
+                                                    type="button"
+                                                    tabIndex={-1}
                                                     color="link"
                                                     className="p-0"
                                                 >
@@ -119,6 +123,7 @@ class Login extends Component {
                                         type="password"
                                         id="password"
                                         name="password"
+                                        tabIndex={0}
                                         value={password}
                                         onChange={this.handleChange}
                                     />
