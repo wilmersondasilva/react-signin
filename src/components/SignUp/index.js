@@ -14,6 +14,9 @@ import {
 } from 'reactstrap'
 import { REQUEST_DELAY } from '../../services/http'
 
+const REGULAR_SUBMIT_BUTTON_TEXT = 'Sign Up'
+const LOADING_SUBMIT_BUTTON_TEXT = 'Sending...'
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -22,10 +25,8 @@ class Login extends Component {
             password: '',
             firstName: '',
             lastName: '',
-            isEmailInvalid: '',
-            isPasswordInvalid: '',
-            signUpButtonText: 'Sign up',
-            isSignUpButtonDisabled: false
+            isEmailEmpty: undefined,
+            isPasswordEmpty: undefined
         }
 
         this.history = props.history
@@ -36,33 +37,40 @@ class Login extends Component {
             [name]: value
         })
     }
-    signUp = event => {
-        event.preventDefault()
+    validate = () => {
+        debugger;
         const { email, password } = this.state
+        const errors = []
 
         this.setState({
-            isEmailInvalid: '',
-            isPasswordInvalid: ''
+            isEmailEmpty: undefined,
+            isPasswordEmpty: undefined,
         })
 
-        if (!email) {
-            this.setState({
-                isEmailInvalid: 'invalid'
-            })
-        }
+        if (!email)
+            errors.push({ isEmailEmpty: true })
 
-        if (!password) {
-            this.setState({
-                isPasswordInvalid: 'invalid'
-            })
-        }
+        if (!password)
+            errors.push({ isPasswordEmpty: true })
 
-        if (email && password) {
+        const errorsObject = errors.reduce((errorsObject, error) => {
+            return Object.assign({}, errorsObject, error)
+        }, {})
+
+        this.setState(errorsObject)
+    
+        return !errors.length
+    }
+    signUp = event => {
+        debugger;
+        event.preventDefault()
+        const isValid = this.validate()
+
+        if (isValid) {
             this.setState({
-                isEmailInvalid: '',
-                isPasswordInvalid: '',
-                signUpButtonText: 'Signing up...',
-                isSignUpButtonDisabled: true
+                isEmailEmpty: '',
+                isPasswordEmpty: '',
+                isLoading: true
             })
 
             setTimeout(() => {
@@ -76,10 +84,9 @@ class Login extends Component {
             password,
             firstName,
             lastName,
-            isEmailInvalid,
-            isPasswordInvalid,
-            signUpButtonText,
-            isSignUpButtonDisabled
+            isEmailEmpty,
+            isPasswordEmpty,
+            isLoading,
         } = this.state
 
         return (
@@ -125,8 +132,8 @@ class Login extends Component {
                                         id="email"
                                         name="email"
                                         value={email}
-                                        valid={isEmailInvalid !== ''}
-                                        invalid={isEmailInvalid === 'invalid'}
+                                        valid={isEmailEmpty === false}
+                                        invalid={isEmailEmpty === true}
                                         onChange={e => {
                                             this.handleChange(e)
                                         }}
@@ -144,10 +151,8 @@ class Login extends Component {
                                         id="password"
                                         name="password"
                                         value={password}
-                                        valid={isPasswordInvalid !== ''}
-                                        invalid={
-                                            isPasswordInvalid === 'invalid'
-                                        }
+                                        valid={isPasswordEmpty === false}
+                                        invalid={isPasswordEmpty === true}
                                         onChange={e => this.handleChange(e)}
                                     />
                                     <FormFeedback valid></FormFeedback>
@@ -158,9 +163,9 @@ class Login extends Component {
                                 </FormGroup>
                                 <Button
                                     className="w-100"
-                                    disabled={isSignUpButtonDisabled}
+                                    disabled={isLoading}
                                 >
-                                    {signUpButtonText}
+                                    {isLoading ? LOADING_SUBMIT_BUTTON_TEXT : REGULAR_SUBMIT_BUTTON_TEXT}
                                 </Button>
                             </Form>
                         </Container>

@@ -13,6 +13,9 @@ import {
 } from 'reactstrap'
 import http from '../../services/http'
 
+const REGULAR_SUBMIT_BUTTON_TEXT = 'Sign In'
+const LOADING_SUBMIT_BUTTON_TEXT = 'Sending...'
+
 class Login extends Component {
     constructor(props) {
         super(props)
@@ -20,8 +23,7 @@ class Login extends Component {
             email: '',
             password: '',
             isAlertVisible: false,
-            signInButtonText: 'Sign In',
-            isSignInButtonDisabled: false
+            isLoading: false
         }
 
         this.history = props.history
@@ -37,8 +39,7 @@ class Login extends Component {
         const { email, password } = this.state
 
         this.setState({
-            signInButtonText: 'Signing in...',
-            isSignInButtonDisabled: true,
+            isLoading: true,
             isAlertVisible: false
         })
 
@@ -47,9 +48,11 @@ class Login extends Component {
             this.history.push('/home')
         } catch (error) {
             this.setState({
-                signInButtonText: 'Sign in',
-                isSignInButtonDisabled: false,
                 isAlertVisible: true
+            })
+        } finally {
+            this.setState({
+                isLoading: false
             })
         }
     }
@@ -62,8 +65,7 @@ class Login extends Component {
         const {
             email,
             password,
-            signInButtonText,
-            isSignInButtonDisabled
+            isLoading
         } = this.state
         return (
             <Container fluid>
@@ -123,9 +125,9 @@ class Login extends Component {
                                 </FormGroup>
                                 <Button
                                     className="w-100"
-                                    disabled={isSignInButtonDisabled}
+                                    disabled={isLoading}
                                 >
-                                    {signInButtonText}
+                                    {isLoading ? LOADING_SUBMIT_BUTTON_TEXT : REGULAR_SUBMIT_BUTTON_TEXT}
                                 </Button>
                             </Form>
                         </Container>

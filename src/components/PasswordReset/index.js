@@ -13,6 +13,9 @@ import {
 } from 'reactstrap'
 import http from '../../services/http'
 
+const REGULAR_SUBMIT_BUTTON_TEXT = 'Send password reset email'
+const LOADING_SUBMIT_BUTTON_TEXT = 'Sending...'
+
 class PasswordReset extends Component {
     constructor(props) {
         super(props)
@@ -21,9 +24,9 @@ class PasswordReset extends Component {
             emailLabelText:
                 'Enter your email address and we will send you a link to reset your password',
             isAlertVisible: false,
-            isSignInButtonDisabled: false,
             shouldShowSubmitButton: true,
-            shouldShowEmailInput: true
+            shouldShowEmailInput: true,
+            isLoading: false
         }
 
         this.history = props.history
@@ -42,7 +45,8 @@ class PasswordReset extends Component {
         const { email } = this.state
 
         this.setState({
-            isAlertVisible: false
+            isAlertVisible: false,
+            isLoading: true
         })
 
         try {
@@ -57,7 +61,12 @@ class PasswordReset extends Component {
             this.setState({
                 isAlertVisible: true
             })
+        } finally {
+            this.setState({
+                isLoading: false
+            })
         }
+
     }
     onDismiss = () => {
         this.setState({
@@ -69,7 +78,8 @@ class PasswordReset extends Component {
             email,
             emailLabelText,
             shouldShowSubmitButton,
-            shouldShowEmailInput
+            shouldShowEmailInput,
+            isLoading
         } = this.state
         return (
             <Container fluid>
@@ -96,8 +106,8 @@ class PasswordReset extends Component {
                                     )}
                                 </FormGroup>
                                 {shouldShowSubmitButton ? (
-                                    <Button className="w-100">
-                                        Send password reset email
+                                    <Button disabled={isLoading} className="w-100">
+                                        {isLoading ? LOADING_SUBMIT_BUTTON_TEXT : REGULAR_SUBMIT_BUTTON_TEXT}
                                     </Button>
                                 ) : (
                                     <Button
