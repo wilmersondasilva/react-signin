@@ -11,8 +11,7 @@ import {
     Col,
     Alert
 } from 'reactstrap'
-
-const CORRECT_EMAIL = 'user@mine.com'
+import http from '../../services/http'
 
 class PasswordReset extends Component {
     constructor(props) {
@@ -38,7 +37,7 @@ class PasswordReset extends Component {
     goBack = () => {
         this.history.goBack()
     }
-    submit = event => {
+    submit = async event => {
         event.preventDefault()
         const { email } = this.state
 
@@ -46,14 +45,15 @@ class PasswordReset extends Component {
             isAlertVisible: false
         })
 
-        if (email === CORRECT_EMAIL) {
+        try {
+            await http.resetPassword(email)
             this.setState({
                 emailLabelText:
                     'Check your email for a link to reset your password',
                 shouldShowSubmitButton: false,
                 shouldShowEmailInput: false
             })
-        } else {
+        } catch (error) {
             this.setState({
                 isAlertVisible: true
             })

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import Router from './routes/Router'
+import Routes from './routes'
 
 class App extends Component {
     render() {
-        return <Router />
+        return <Routes />
     }
 }
 

@@ -11,9 +11,7 @@ import {
     Col,
     Alert
 } from 'reactstrap'
-
-const CORRECT_EMAIL = 'user@mine.com'
-const CORRECT_PASSWORD = 'password'
+import http from '../../services/http'
 
 class Login extends Component {
     constructor(props) {
@@ -34,7 +32,7 @@ class Login extends Component {
             [name]: value
         })
     }
-    signIn = event => {
+    signIn = async event => {
         event.preventDefault()
         const { email, password } = this.state
 
@@ -44,17 +42,16 @@ class Login extends Component {
             isAlertVisible: false
         })
 
-        setTimeout(() => {
-            if (email === CORRECT_EMAIL && password === CORRECT_PASSWORD) {
-                this.history.push('/home')
-            } else {
-                this.setState({
-                    signInButtonText: 'Sign in',
-                    isSignInButtonDisabled: false,
-                    isAlertVisible: true
-                })
-            }
-        }, 1500)
+        try {
+            await http.signIn(email, password)
+            this.history.push('/home')
+        } catch (error) {
+            this.setState({
+                signInButtonText: 'Sign in',
+                isSignInButtonDisabled: false,
+                isAlertVisible: true
+            })
+        }
     }
     onDismiss = () => {
         this.setState({

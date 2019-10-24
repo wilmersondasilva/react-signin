@@ -12,6 +12,7 @@ import {
     Row,
     Col
 } from 'reactstrap'
+import { REQUEST_DELAY } from '../../services/http'
 
 class Login extends Component {
     constructor(props) {
@@ -66,7 +67,7 @@ class Login extends Component {
 
             setTimeout(() => {
                 this.history.push('/home')
-            }, 1500)
+            }, REQUEST_DELAY)
         }
     }
     render() {
