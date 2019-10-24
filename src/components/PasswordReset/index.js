@@ -86,7 +86,6 @@ class PasswordReset extends Component {
                 <h3 className="text-center mt-4">Reset your password</h3>
                 <Row className="pt-1">
                     <Col
-                        xs={{ size: 10, offset: 1 }}
                         sm={{ size: 8, offset: 2 }}
                         md={{ size: 6, offset: 3 }}
                         lg={{ size: 4, offset: 4 }}

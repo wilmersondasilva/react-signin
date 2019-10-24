@@ -83,7 +83,7 @@ class Login extends Component {
                         >
                             Incorrect username or password.
                         </Alert>
-                        <Container className="my-5 py-5 px-4 border border-secondary rounded">
+                        <Container className="my-md-5 py-5 px-4 border border-secondary rounded">
                             <h2 className="text-center mb-4">Mine</h2>
                             <Form className="form" onSubmit={this.signIn}>
                                 <FormGroup>
@@ -100,7 +100,7 @@ class Login extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <Row>
-                                        <Col>
+                                        <Col xs="4">
                                             <Label for="password">
                                                 Password
                                             </Label>
@@ -135,7 +135,7 @@ class Login extends Component {
                                 </Button>
                             </Form>
                         </Container>
-                        <Container className="mt-5 py-3 text-center border border-secondary rounded">
+                        <Container className="my-5 py-3 text-center border border-secondary rounded">
                             New to Mine?
                             <Link to="/signup">
                                 <Button

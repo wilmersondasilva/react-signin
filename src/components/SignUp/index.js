@@ -93,12 +93,11 @@ class Login extends Component {
             <Container className="mt-5" fluid>
                 <Row>
                     <Col
-                        xs={{ size: 10, offset: 1 }}
                         sm={{ size: 8, offset: 2 }}
                         md={{ size: 6, offset: 3 }}
                         lg={{ size: 4, offset: 4 }}
                     >
-                        <Container className="mt-5 py-5 px-4 border border-secondary rounded">
+                        <Container className="mt-md-5 mb-5 py-5 px-4 border border-secondary rounded">
                             <h2 className="text-center mb-4">Mine</h2>
                             <Form className="form" onSubmit={this.signUp}>
                                 <FormGroup>
@@ -108,9 +107,7 @@ class Login extends Component {
                                         id="firstName"
                                         name="firstName"
                                         value={firstName}
-                                        onChange={e => {
-                                            this.handleChange(e)
-                                        }}
+                                        onChange={this.handleChange}
                                     />
                                 </FormGroup>
                                 <FormGroup>
@@ -120,9 +117,7 @@ class Login extends Component {
                                         id="lastName"
                                         name="lastName"
                                         value={lastName}
-                                        onChange={e => {
-                                            this.handleChange(e)
-                                        }}
+                                        onChange={this.handleChange}
                                     />
                                 </FormGroup>
                                 <FormGroup>
@@ -134,13 +129,12 @@ class Login extends Component {
                                         value={email}
                                         valid={isEmailEmpty === false}
                                         invalid={isEmailEmpty === true}
-                                        onChange={e => {
-                                            this.handleChange(e)
-                                        }}
+                                        onBlur={this.validate}
+                                        onChange={this.handleChange}
                                     />
                                     <FormFeedback valid></FormFeedback>
                                     <FormFeedback>
-                                        Please this field is required
+                                        This field is required
                                     </FormFeedback>
                                     <FormText>Required field</FormText>
                                 </FormGroup>
@@ -153,11 +147,12 @@ class Login extends Component {
                                         value={password}
                                         valid={isPasswordEmpty === false}
                                         invalid={isPasswordEmpty === true}
-                                        onChange={e => this.handleChange(e)}
+                                        onBlur={this.validate}
+                                        onChange={this.handleChange}
                                     />
                                     <FormFeedback valid></FormFeedback>
                                     <FormFeedback>
-                                        Please this field is required
+                                        This field is required
                                     </FormFeedback>
                                     <FormText>Required field</FormText>
                                 </FormGroup>
