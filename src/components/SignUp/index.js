@@ -38,7 +38,6 @@ class Login extends Component {
         })
     }
     validate = () => {
-        debugger;
         const { email, password } = this.state
         const errors = []
 
@@ -62,7 +61,6 @@ class Login extends Component {
         return !errors.length
     }
     signUp = event => {
-        debugger;
         event.preventDefault()
         const isValid = this.validate()
 
